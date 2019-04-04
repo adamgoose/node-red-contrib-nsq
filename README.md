@@ -1,5 +1,7 @@
 # node-red-contrib-nsq
 
+[![npm version](https://badge.fury.io/js/node-red-contrib-nsq.svg)](https://badge.fury.io/js/node-red-contrib-nsq)
+
 A [NodeRED](https://nodered.org) Node for Subscribing and Publishing to [NSQ](https://nsq.io) Topics.
 
 ![](doc/flow.png)
