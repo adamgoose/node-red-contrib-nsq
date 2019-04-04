@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-nsq",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A NodeRED Node for Subscribing and Publishing to NSQ Topics",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "nsq"
   ],
   "author": "Adam Engebretson <adam@enge.me>",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "nsqjs": "^0.12.0"
   },
