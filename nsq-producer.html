@@ -1,0 +1,33 @@
+<script type="text/javascript">
+    RED.nodes.registerType('nsq-producer',{
+        category: 'output',
+        color: '#69c',
+        defaults: {
+            connection: {value:"", type:"nsq-connection"},
+            topic: {value:"",required:true}
+        },
+        inputs:1,
+        outputs:2,
+        icon: "bridge.png",
+        align: "right",
+        label: function() {
+            return this.topic||"nsq-producer";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="nsq-producer">
+    <div class="form-row">
+        <label for="node-input-connection"><i class="fa fa-plug"></i> Connection</label>
+        <input type="text" id="node-input-connection" placeholder="Connection">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="icon-tag"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="importantStuff">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="nsq-producer">
+    <p>Publishes a message onto an NSQ topic.</p>
+    <p>Specifying <code>msg.topic</code> will override the node's configured topic.</p>
+</script>

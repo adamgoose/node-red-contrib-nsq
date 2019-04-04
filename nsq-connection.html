@@ -1,0 +1,31 @@
+<script type="text/javascript">
+    RED.nodes.registerType('nsq-connection',{
+        category: 'config',
+        color: '#69c',
+        defaults: {
+            name: {value:"",required:true},
+            host: {value:"",required:true},
+            port: {value:"4150",required:true,validate:RED.validators.number()}
+        },
+        label: function() {
+            return this.name||"nsq-connection";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="nsq-connection">
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-config-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-host"><i class="icon-tag"></i> Host</label>
+        <input type="text" id="node-config-input-host" placeholder="host">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-port"><i class="icon-tag"></i> Port</label>
+        <input type="text" id="node-config-input-port" placeholder="4150">
+    </div>
+</script>

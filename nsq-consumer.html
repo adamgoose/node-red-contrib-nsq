@@ -1,0 +1,73 @@
+<script type="text/javascript">
+    RED.nodes.registerType('nsq-consumer',{
+        category: 'input',
+        color: '#69c',
+        defaults: {
+            connection: {value:"", type:"nsq-connection"},
+            topic: {value:"",required:true},
+            channel: {value:"node-red",required:true},
+            finishImmediately: {value:true}
+        },
+        outputs:1,
+        icon: "feed.png",
+        label: function() {
+            return this.topic||"nsq-consumer";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="nsq-consumer">
+    <div class="form-row">
+        <label for="node-input-connection"><i class="fa fa-plug"></i> Connection</label>
+        <input type="text" id="node-input-connection" placeholder="Connection">
+    </div>
+    <div class="form-row">
+        <label for="node-input-topic"><i class="icon-tag"></i> Topic</label>
+        <input type="text" id="node-input-topic" placeholder="importantStuff">
+    </div>
+    <div class="form-row">
+        <label for="node-input-channel"><i class="icon-tag"></i> Channel</label>
+        <input type="text" id="node-input-channel" placeholder="node-red">
+    </div>
+    <div class="form-row">
+        <label for="node-input-finishImmediately"><i class="icon-check"></i> Finish Immediately</label>
+        <input type="checkbox" id="node-input-finishImmediately">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="nsq-consumer">
+    <p>The consumer node subscribes to an NSQ topic on a channel.</p>
+    <p>Checking "Finish Immediately" will automatically "ack" your messages. Otherwise, you must either <code>finish</code>, <code>touch</code>, or <code>requeue</code> the message before <code>msg._nsq.timeout</code> seconds.
+
+    <h3>Outputs</h3>
+    <ol class="node-ports">
+        <li>Standard output
+            <dl class="message-properties">
+                <dt>payload <span class="property-type">object</span></dt>
+                <dd>The parsed json body of the message.</dd>
+            </dl>
+        </li>
+        <li>NSQ tracing information
+            <dl class="message-properties">
+                <dt>_nsq.id <span class="property-type">string</span></dt>
+                <dd>NSQ Message ID</dd>
+
+                <dt>_nsq.node_id <span class="property-type">string</span></dt>
+                <dd>The ID of the Consumer node that received this message</dd>
+
+                <dt>_nsq.timestamp <span class="property-type">string</span></dt>
+                <dd>The timestamp of the message</dd>
+
+                <dt>_nsq.attempts <span class="property-type">int</span></dt>
+                <dd>The number of delivery attempts</dd>
+
+                <dt>_nsq.timeout <span class="property-type">int</span></dt>
+                <dd>The message timeout in seconds</dd>
+
+                <dt>_nsq.has_responded <span class="property-type">bool</span></dt>
+                <dd>Whether the messages has been finished or requeued</dd>
+            </dl>
+        </li>
+    </ol>
+
+</script>

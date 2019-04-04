@@ -1,0 +1,93 @@
+<script type="text/javascript">
+    RED.nodes.registerType('nsq-finish', {
+        category: 'output',
+        color: '#69c',
+        defaults:{
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "function.png",
+        align: "right",
+        label: function() {
+            return "nsq-finish"
+        }
+    });
+
+    RED.nodes.registerType('nsq-touch', {
+        category: 'output',
+        color: '#69c',
+        defaults:{
+            name: {value:""}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "function.png",
+        align: "right",
+        label: function() {
+            return "nsq-touch"
+        }
+    });
+
+    RED.nodes.registerType('nsq-requeue', {
+        category: 'output',
+        color: '#69c',
+        defaults:{
+            name: {value:""},
+            delay: {value:"90",required:true,validate:RED.validators.number()},
+            backoff: {value:false}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "function.png",
+        align: "right",
+        label: function() {
+            return this.name||("nsq-requeue (" + this.delay + "s)")
+        }
+    });
+</script>
+
+<script type="text/x-red" data-help-name="nsq-finish">
+    <p>Finishes an NSQ Message. Simply provide <code>msg._nsq</code>.</p>
+</script>
+
+<script type="text/x-red" data-template-name="nsq-finish">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="nsq-touch">
+    <p>Touches an NSQ Message. Simply provide <code>msg._nsq</code>.</p>
+</script>
+
+<script type="text/x-red" data-template-name="nsq-touch">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="nsq-requeue">
+    <p>Requeues an NSQ Message. Simply provide <code>msg._nsq</code>.</p>
+    <p>Delay is the number of seconds before NSQ will attempt to redeliver the message.</p>
+    <p>Backoff indicates that we should treat this as an error within this process and we need to backoff to recover.</p>
+</script>
+
+<script type="text/x-red" data-template-name="nsq-requeue">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-delay"><i class="icon-tag"></i> Delay (s)</label>
+        <input type="number" id="node-input-delay" placeholder="90">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-backoff"><i class="icon-tag"></i> Backoff</label>
+        <input type="checkbox" id="node-input-backoff">
+    </div>
+</script>
