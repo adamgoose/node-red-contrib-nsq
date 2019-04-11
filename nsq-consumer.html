@@ -1,19 +1,21 @@
 <script type="text/javascript">
-    RED.nodes.registerType('nsq-consumer',{
-        category: 'input',
-        color: '#69c',
-        defaults: {
-            connection: {value:"", type:"nsq-connection"},
-            topic: {value:"",required:true},
-            channel: {value:"node-red",required:true},
-            finishImmediately: {value:true}
-        },
-        outputs:1,
-        icon: "feed.png",
-        label: function() {
-            return this.topic||"nsq-consumer";
-        }
-    });
+  RED.nodes.registerType('nsq-consumer', {
+    category: 'input',
+    color: '#69c',
+    defaults: {
+      connection: { value: "", type: "nsq-connection" },
+      topic: { value: "", required: true },
+      channel: { value: "node-red", required: true },
+      finishImmediately: { value: true },
+      maxInFlight: { value: 1, required: true, validate: RED.validators.number() },
+      maxAttempts: { value: 0, required: true, validate: RED.validators.number() }
+    },
+    outputs: 1,
+    icon: "feed.png",
+    label: function () {
+      return this.topic || "nsq-consumer";
+    }
+  });
 </script>
 
 <script type="text/x-red" data-template-name="nsq-consumer">
@@ -33,12 +35,30 @@
         <label for="node-input-finishImmediately"><i class="icon-check"></i> Finish Immediately</label>
         <input type="checkbox" id="node-input-finishImmediately">
     </div>
+    <div class="form-row">
+      <label for="node-input-maxInFlight"><i class="icon-check"></i> MaxInFlight</label>
+      <input type="number" id="node-input-maxInFlight">
+    </div>
+    <div class="form-row">
+      <label for="node-input-maxAttempts"><i class="icon-check"></i> MaxAttempts</label>
+      <input type="number" id="node-input-maxAttempts">
+    </div>
 </script>
 
 <script type="text/x-red" data-help-name="nsq-consumer">
     <p>The consumer node subscribes to an NSQ topic on a channel.</p>
     <p>Checking "Finish Immediately" will automatically "ack" your messages. Otherwise, you must either <code>finish</code>, <code>touch</code>, or <code>requeue</code> the message before <code>msg._nsq.timeout</code> seconds.
 
+    <h3>Options</h3>
+    <dl class="message-properties">
+      <dt class="required">topic <span class="property-type">string</span></dt>
+      <dt class="required">channel <span class="property-type">string</span></dt>
+      <dt class="optional">finishImmediately <span class="property-type">bool</span></dt>
+      <dt class="required">maxInFlight <span class="property-type">int</span></dt>
+      <dd>The maximum number of messages to process at once.</dd>
+      <dt class="required">maxAttempts <span class="property-type">int</span></dt>
+      <dd>The number of times a given message will be attempted before it will be handed to the DISCARD handler and then automatically finished. 0 means that there is no limit.</dd>
+    </dl>
     <h3>Outputs</h3>
     <ol class="node-ports">
         <li>Standard output

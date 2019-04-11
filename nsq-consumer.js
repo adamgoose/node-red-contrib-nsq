@@ -14,7 +14,9 @@ module.exports = function (RED) {
     node.status({ fill: "red", shape: "ring", text: "Not Ready" })
 
     const consumer = new nsq.Reader(node.topic, node.channel, {
-      nsqdTCPAddresses: [node.connection.host + ":" + node.connection.port]
+      nsqdTCPAddresses: [node.connection.host + ":" + node.connection.port],
+      maxInFlight: parseInt(config.maxInFlight || 1),
+      maxAttempts: parseInt(config.maxAttempts || 0),
     })
 
     consumer.on('error', err => {
